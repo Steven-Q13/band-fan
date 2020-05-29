@@ -1,0 +1,15 @@
+#pycache files
+*/__pycache__
+*.pyc
+
+./venv
+
+#Module files
+/*.egg-info
+/*.egg
+
+#Python supporting file
+*.swp
+
+#Dev notes
+*.txt
