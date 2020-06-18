@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Band-Fan{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1 col"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-2 box">
+            <div class="row">
+                
+                <div class="col-lg-5 col-md-5 col-sm-5 col-1 page-box">
+                    <a href="#">
+                        <p>My Bands</p>
+                    </a>
+                </div>
+                
+                <div class="col-lg-2 col-md-2 col-sm-2 col-2 "></div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-2 page-box">
+                    <a href="#">
+                        <p class="pad">Search</p>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-5 page-box">
+                    <a href="#">
+                        <p class="pad">Updates</p>
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 col-2"></div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-5 page-box">
+                    <a href="{{ url_for('main.profile') }}">
+                        <p class="pad">Profile</p>
+                    </a>
+                </div>
+            </div>
+        </div> 
+        <div class="col-lg-1 col-md-1 col-sm-1 col"></div>
+    </div>
+    
+
+{% endblock %}
+
+

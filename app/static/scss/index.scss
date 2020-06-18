@@ -1,0 +1,93 @@
+@use "color";
+
+body {
+    background: color.$app-black;
+    color: color.$app-white;
+}
+
+.box {
+    margin-top: calc(80px + (160 - 80) * ((100vw - 570px) / (1200 - 576)));
+    color: color.$app-black;
+}
+
+@media (max-width:576px) {
+    .box {
+        margin-top: 60px;
+        margin-right: 36px;
+        margin-left: 36px;
+    }
+}
+
+.page-box {
+    background: color.$app-green;
+    margin-bottom: calc(12px + (80 - 12) * ((100vw - 350px) / (1600 - 350)));
+    height: auto;
+    text-align: center;
+    border-radius: 16px;
+    /*font-size: 4vw*/
+    font-size: calc(24px + (64 - 24) * ((100vw - 200px) / (1600 - 200)));
+}
+
+.page-box > a {
+    color: color.$app-black;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    padding-top: 0em;
+    padding-left: 1.48em;
+    padding-right: 1.48em;
+    margin: -1em;
+}
+
+a:hover {
+    color: color.$app-gray;
+    text-decoration: none;
+}
+
+a:active {
+    color: color.$app-black;
+    text-decoration: none;
+}
+
+@media (max-width:991px) {
+    .page-box > a {
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        padding-top: 0em;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        margin: -1.25em;
+    }
+}
+
+
+@media (max-width:768px) 
+and (min-width:576px)
+{
+    .page-box {
+        margin-right: 1em;
+        margin-left: 1em;
+    }
+    .page-box > a {
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        padding-top: 0em;
+        padding-left: 6.2em;
+        padding-right: 6.2em;
+        margin: -6.2em;
+    }
+}
+
+@media (max-width:576px) {
+    .page-box > a {
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+        padding-top: 0em;
+        padding-left: 4.5em;
+        padding-right: 4.5em;
+        margin: -4.5em;
+    }
+}

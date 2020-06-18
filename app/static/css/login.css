@@ -1,0 +1,131 @@
+@charset "UTF-8";
+.login-box {
+  margin-top: 75px;
+  margin-top: calc(8px + (140 - 8) * ((100vw - 520px) / (1600 - 520)));
+  height: auto;
+  background: #564654;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0;
+}
+
+.login-icon {
+  margin-top: 18px;
+}
+
+.login-title {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 30px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  color: #f4f0f8;
+}
+
+.login-form {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.form-field {
+  background-color: #564654;
+  border: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  border-bottom: 2px solid #6ec878;
+  border-radius: 0px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin-bottom: 36px;
+  color: #f4f0f8;
+}
+
+.form-field:focus {
+  border-bottom: 2px solid #6ec878;
+  box-shadow: none;
+  outline: 0;
+  background-color: #564654;
+  color: #f4f0f8;
+}
+
+.form-control-label {
+  font-size: 11px;
+  color: #f4f0f8;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.btn-login {
+  background: #564654;
+  border-color: #6ec878;
+  border-radius: 6px;
+  color: #6ec878;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.btn-login:hover {
+  background: #6ec878;
+  border-color: #6ec878;
+  color: #242224;
+}
+
+.login-button {
+  float: right;
+  text-align: right;
+  margin-bottom: 26px;
+}
+
+.login-link:link {
+  color: #6e97c8;
+}
+
+.login-link:visited {
+  color: #5d7b9e;
+}
+
+.login-link:hover {
+  color: #5d7b9e;
+}
+
+.login-redirects {
+  color: #f4f0f8;
+  text-align: center;
+  float: center;
+  margin-bottom: 24px;
+}
+
+.login-checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f4f0f8;
+  width: 13px;
+  height: 13px;
+  border: 0px;
+  border-radius: 0px;
+  display: inline-block;
+  position: relative;
+}
+
+.login-checkbox:checked {
+  background-color: #6ec878;
+  width: 13px;
+  height: 13px;
+  border: 0px;
+  border-radius: 0px;
+  display: inline-block;
+  position: relative;
+}
+
+.login-checkbox:checked:after {
+  content: "✔";
+  font-size: 14px;
+  position: absolute;
+  line-height: 0px;
+  top: 6px;
+  left: 0.5px;
+  color: #242224;
+}
+
+/*# sourceMappingURL=login.css.map */

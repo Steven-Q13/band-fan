@@ -1,0 +1,104 @@
+{% extends "bootstrap/base.html" %}
+
+
+{% block title %}Band Fan{% endblock %}
+
+<!-- Fix links going into toggle at breakpoint -->
+
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet"> 
+{% endblock %}
+
+
+{% block navbar %}
+<nav class="navbar navbar-default" style="background: #6ec878; border: none; border-radius: 0 0 5px 5px;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-toggle" aria-expanded="false" style="border: 0;">
+                    <span class="sr-only" >Toggle navigation</span>
+                    <div class="hamburger-btn"></div>
+					<div class="hamburger-btn"></div>
+					<div class="hamburger-btn"></div>
+                </button>
+                <a class="navbar-brand" style="color: #242224;" href="{{ url_for('main.index') }}">Microblog</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-toggle">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('main.index') }}" style="color: #242224;">Home</a></li>
+                    <li><a href="#" style="color: #242224;">Explore</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('auth.login') }}" style="color: #242224;">Login</a></li>
+                    {% else %}
+                    <li><a href="#" style="color: #242224;">Profile</a></li>
+                    <li><a href="{{ url_for('auth.logour') }}" style="color: #242224;">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+{% endblock %}
+<nav class="navbar navbar-green navbar-static-top" style="background-color: #6ec878;">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collasped" data-toggle="collapse" data-target="#navbar-collapse">
+				<span class="sr-only">Toggle Navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" style="color: #000" href="{{ url_for('main.index') }}">Band Fan</a>
+		</div>
+
+		<div class="navbar-collapse collapse" id=#navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a style="color: #000" href="{{ url_for('main.index') }}">Home</a></li>
+				{% if current_user.is_logged_in %}
+				<li><a style="color: #000" href="{{ url_for('main_user', username=current_user.username) }}">Profile</a></li>
+				{% endif %}
+				{% if current_user.is_logged_in %}
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" style="color: #000" data-toggle="dropdown">Account</a>
+					<ul class="dropdown-menu">
+                        <li><a style="color: #000" href="{{ url_for('auth.change_password') }}">Change Password</a></li> 
+                        <li><a style="color: #000" href="{{ url_for('auth.change_email_request') }}">Change Email</a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a style="color: #000" href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                    </ul>
+				</li>
+				{% else %}
+				<li><a style="color: #000" href="{{ url_for('auth.login') }}">Login</a></li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
+
+
+{% block content %}
+<div class="container">
+	{% for message in get_flashed_messages() %}
+	<div class="row">
+		<div class="alert alert-warning">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{ message }}
+		</div>
+	</div>
+	{% endfor %}
+
+	{% block page_content %}{% endblock %}
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}

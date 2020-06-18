@@ -1,0 +1,25 @@
+.navbar-text {
+  color: #242224;
+}
+
+body {
+  background: #242224;
+  font-family: "Ubuntu", sans-serif;
+  color: #f4f0f8;
+}
+
+.hamburger-btn {
+  height: 3px;
+  width: 22px;
+  margin: auto;
+  border-radius: 4px;
+  background: #242224;
+  margin: 2px;
+}
+
+.pic-20 {
+  width: 20%;
+  height: auto;
+}
+
+/*# sourceMappingURL=base.css.map */
