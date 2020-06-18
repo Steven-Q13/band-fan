@@ -7,8 +7,20 @@ from . import db, login_manager
 
 #Can add any necessary methods to flask-login's default anonymous user
 class AnonymousUser(AnonymousUserMixin):
-	pass
-login_manager.anonymous_ser = AnonymousUser
+	is_logged_in = False
+login_manager.anonymous_user = AnonymousUser
+
+
+class Follow(db.Model):
+	__tablename__ = 'follows'
+	follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+							primary_key=True)
+	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
+								  primary_key=True)
+	last_checkin = db.Column(db.DateTime, default=datetime.utcnow)
+
+	def ping(self):
+		self.last_checkin = datetime.utcnow()
 
 
 class User(UserMixin, db.Model):
@@ -20,7 +32,7 @@ class User(UserMixin, db.Model):
 	signup_date = db.Column(db.DateTime(), default=datetime.utcnow)
 	last_login = db.Column(db.DateTime(), default=datetime.utcnow)
 	following = db.relationship('Follow', 
-								foriegn_keys=[Follow.follower_id],
+								foreign_keys=[Follow.follower_id],
 								backref=db.backref('following', lazy='joined'),
 								lazy='dynamic',
 								cascade='all, delete-orphan')
@@ -64,17 +76,7 @@ class User(UserMixin, db.Model):
 		return self.following.filter_by(
 			band_following_id=band.id).first() is not None
 
-
-class Follow(db.Model):
-	__tablename__ = 'follows'
-	follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-							primary_key=True)
-	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
-								  primary_key=True)
-	last_checkin = db.Column(db.db.DateTime, defaul=datetime.utcnow)
-
-	def ping(self):
-		self.last_checkin = datetime.utcnow()
+	is_logged_in = True
 
 
 class Band(db.Model):
@@ -82,7 +84,7 @@ class Band(db.Model):
 	id = db.Column(db.Integer, primary_key=True, index=True)
 	name = db.Column(db.String(64), unique=True, index=True)
 	followers = db.relationship('Follow',
-								foriegn_keys=[Follow.band_following_id],
+								foreign_keys=[Follow.band_following_id],
 								backref=db.backref('band_following', 
 												   lazy='joined'),
 								lazy='dynamic',
@@ -100,5 +102,11 @@ class Band(db.Model):
 		for u in all_users:
 			if u.last_checkin<comp_time:
 				users.append(u)
-			u.ping()
+			else:
+				u.ping()
 		return users
+
+
+@login_manager.user_loader
+def load_user(id):
+	return User.query.get(int(id))
