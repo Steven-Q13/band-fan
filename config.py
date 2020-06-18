@@ -5,12 +5,16 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
 	SECRET_KEY = os.environ.get('SECRET_KEY') or 'random word'
 	SSL_REDIRECT = False
-	SQL_ALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
 		'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	SQL_ALCHEMY_RECORD_QUERIES = True
 	SSL_REDIRECT = False
 	SLOW_DB_QUERY_TIME = 0.1
+
+	@staticmethod
+	def init_app(app):
+		pass
 
 
 class DevConfig(Config):
@@ -45,5 +49,5 @@ config = {
     'production':ProductionConfig,
     'heroku':HerokuConfig,
 
-    'default':DefaultConfig
+    'default':DevConfig
 }

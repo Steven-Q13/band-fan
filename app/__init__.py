@@ -1,8 +1,10 @@
+import click
+from flask.cli import with_appcontext
 from config import config
-from flask import flask
+from flask import Flask
 from flask_moment import Moment
 from flask_login import LoginManager
-from flask_boostrap import Bootstrap
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -12,7 +14,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
 
-def create_app(config='default'):
+def create_app(config_name='default'):
 	#init app
 	app = Flask(__name__)
 	app.config.from_object(config[config_name])
@@ -34,6 +36,9 @@ def create_app(config='default'):
 	app.register_blueprint(main_blueprint, url_prefix='/main')
 
 	from .auth import auth as auth_blueprint
-	app.register_blueprint(auth_blueprinth, url_prefix='/auth')
+	app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
+	from . import dbConfig
+	dbConfig.init_app(app)
 
 	return app
