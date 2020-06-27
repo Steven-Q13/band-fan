@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Band-Fan Search{% endblock %}
+ 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block page_content %}
+<div class="container">
+
+	<div class="row">
+		<div class="col-lg-9 col-md-10 col-sm-11 col-centered">
+			<div class="list-group list-box">
+
+				<form action="" method="post" novalidate>
+					{{ form.hidden_tag() }}
+					<div class="input-group">
+						{{ form.search(class_='form-control', placeholder='Band Name...', style="border-radius: 4px 0px 0px 4px;") }}
+						<div class="input-group-btn">
+							{{ form.submit(class_='btn search-btn') }}
+						</div>
+					</div>
+				</form>
+
+				{% if results %}
+				{% for name in results %}
+				<a href="{{ url_for('main.band', bandID=results[name][0]) }}" class="list-group-item list" >
+					<p class="list-item">
+						<img src="{{ results[name][1] }}" style="margin-right: 12px;" alt="Album Pic" width="64" height="64"> 
+						{{ name }}
+					</p>
+				</a>
+				{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
