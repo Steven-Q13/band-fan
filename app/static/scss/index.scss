@@ -28,6 +28,7 @@ body {
     font-size: calc(24px + (64 - 24) * ((100vw - 200px) / (1600 - 200)));
 }
 
+/*
 .page-box > a {
     color: color.$app-black;
     display: inline-block;
@@ -48,16 +49,48 @@ a:active {
     color: color.$app-black;
     text-decoration: none;
 }
+*/
+
+.a-btn {
+    color: color.$app-black;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    padding-top: 0em;
+    padding-left: 1.48em;
+    padding-right: 1.48em;
+    margin: -1em;
+    text-decoration: none;
+}
+
+.a-btn:link {
+    text-decoration: none;
+}
+
+.a-btn:visited {
+    color: color.$app-black;
+    text-decoration: none;
+}
+
+.a-btn:hover {
+    color: color.$app-gray;
+    text-decoration: none;
+}
+
+.a-btn:active {
+    color: color.$app-black;
+    text-decoration: none;
+}
 
 @media (max-width:991px) {
-    .page-box > a {
+    .a-btn {
         display: inline-block;
         position: relative;
         z-index: 1;
         padding-top: 0em;
-        padding-left: 0.8em;
-        padding-right: 0.8em;
-        margin: -1.25em;
+        padding-left: 1.45em;
+        padding-right: 1.45em;
+        margin: -1.4em;
     }
 }
 
@@ -69,7 +102,7 @@ and (min-width:576px)
         margin-right: 1em;
         margin-left: 1em;
     }
-    .page-box > a {
+    .a-btn {
         display: inline-block;
         position: relative;
         z-index: 1;
@@ -81,7 +114,7 @@ and (min-width:576px)
 }
 
 @media (max-width:576px) {
-    .page-box > a {
+    .a-btn {
         display: inline-block;
         position: relative;
         z-index: 1;

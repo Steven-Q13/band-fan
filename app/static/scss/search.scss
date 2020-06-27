@@ -1,0 +1,42 @@
+@use "color";
+
+
+.list-box {
+	margin-top: 14px;
+}
+
+.search-btn {
+	background: color.$app-green;
+	color: color.$app-black;
+	margin-bottom: 16px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.list {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+.list-item {
+	margin: 0;
+	padding: 12px;
+	font-size: 20px;
+	background: color.$app-gray;
+	color: color.$app-green;
+	text-decoration: none;
+}
+
+.list-item:hover {
+	background: color.$app-green;
+	color: color.$app-black;
+}
+
+.list-item:active {
+	background: color.$app-green;
+	color: color.$app-white;
+}

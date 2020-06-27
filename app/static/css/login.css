@@ -56,6 +56,12 @@
   letter-spacing: 1px;
 }
 
+.login-button {
+  float: right;
+  text-align: right;
+  margin-bottom: 26px;
+}
+
 .btn-login {
   background: #564654;
   border-color: #6ec878;
@@ -69,12 +75,6 @@
   background: #6ec878;
   border-color: #6ec878;
   color: #242224;
-}
-
-.login-button {
-  float: right;
-  text-align: right;
-  margin-bottom: 26px;
 }
 
 .login-link:link {

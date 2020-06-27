@@ -1,0 +1,41 @@
+.list-box {
+  margin-top: 14px;
+}
+
+.search-btn {
+  background: #6ec878;
+  color: #242224;
+  margin-bottom: 16px;
+}
+
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.list-item {
+  margin: 0;
+  padding: 12px;
+  font-size: 20px;
+  background: #564654;
+  color: #6ec878;
+  text-decoration: none;
+}
+
+.list-item:hover {
+  background: #6ec878;
+  color: #242224;
+}
+
+.list-item:active {
+  background: #6ec878;
+  color: #f4f0f8;
+}
+
+/*# sourceMappingURL=search.css.map */

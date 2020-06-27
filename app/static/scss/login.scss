@@ -58,6 +58,12 @@
     letter-spacing: 1px;
 }
 
+.login-button {
+    float: right;
+    text-align: right;
+    margin-bottom: 26px;
+}
+
 .btn-login {
     background: color.$app-gray;
     border-color: color.$app-green;
@@ -71,12 +77,6 @@
     background: color.$app-green;
     border-color: color.$app-green;
     color: color.$app-black;
-}
-
-.login-button {
-    float: right;
-    text-align: right;
-    margin-bottom: 26px;
 }
 
 .login-link:link {
