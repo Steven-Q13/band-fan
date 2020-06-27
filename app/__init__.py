@@ -30,7 +30,6 @@ def create_app(config_name='default'):
 	if app.config['SSL_REDIRECT']:
 		pass
 
-
 	#Attach blueprints
 	from .main import main as main_blueprint
 	app.register_blueprint(main_blueprint, url_prefix='/main')

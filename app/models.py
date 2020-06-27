@@ -1,9 +1,10 @@
 import hashlib
-from datetime import datetime
+from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
 from flask import current_app, request, url_for
 from . import db, login_manager
+
 
 #Can add any necessary methods to flask-login's default anonymous user
 class AnonymousUser(AnonymousUserMixin):
@@ -17,7 +18,7 @@ class Follow(db.Model):
 							primary_key=True)
 	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
 								  primary_key=True)
-	last_checkin = db.Column(db.DateTime, default=datetime.utcnow)
+	last_checkin = db.Column(db.DateTime, default=date.today)
 
 	def ping(self):
 		self.last_checkin = datetime.utcnow()
@@ -29,13 +30,12 @@ class User(UserMixin, db.Model):
 	email = db.Column(db.String(64), unique=True, index=True)
 	username = db.Column(db.String(48), unique=True)
 	password_hash = db.Column(db.String(100))
-	signup_date = db.Column(db.DateTime(), default=datetime.utcnow)
-	last_login = db.Column(db.DateTime(), default=datetime.utcnow)
+	signup_date = db.Column(db.Date(), default=date.today)
+	last_login = db.Column(db.Date(), default=date.today)
 	following = db.relationship('Follow', 
-								foreign_keys=[Follow.follower_id],
-								backref=db.backref('following', lazy='joined'),
-								lazy='dynamic',
-								cascade='all, delete-orphan')
+		foreign_keys=[Follow.follower_id], 
+		backref=db.backref('following', lazy='joined'),
+		lazy='dynamic', cascade='all, delete-orphan')
 
 	@property
 	def password(self):
@@ -82,15 +82,27 @@ class User(UserMixin, db.Model):
 class Band(db.Model):
 	__tablename__ = 'bands'
 	id = db.Column(db.Integer, primary_key=True, index=True)
-	name = db.Column(db.String(64), unique=True, index=True)
+	name = db.Column(db.String(64))
+	img = db.Column(db.String(128))
+	uri = db.Column(db.String(64), unique=True, index=True)
+
+	top_name = db.Column(db.String(64))
+	top_img = db.Column(db.String(128))
+	top_uri = db.Column(db.String(64))
+	top_date = db.Column(db.Date())
+
+	newest_name = db.Column(db.String(64))
+	newest_img = db.Column(db.String(128))
+	newest_uri = db.Column(db.String(64))
+	newest_date = db.Column(db.Date())
+
 	followers = db.relationship('Follow',
 								foreign_keys=[Follow.band_following_id],
 								backref=db.backref('band_following', 
 												   lazy='joined'),
 								lazy='dynamic',
 								cascade='all, delete-orphan')
-	lastest_release = db.Column(db.DateTime())
-	last_update = db.Column(db.DateTime(), default=datetime.utcnow)
+	last_update = db.Column(db.Date(), default=date.today)
 
 	def ping(self):
 		self.last_update = db.datetime.utcnow
@@ -98,13 +110,32 @@ class Band(db.Model):
 	def users_to_notify(self):
 		all_users = self.following.all()
 		users = []
-		comp_time = self.lastest_release
+		comp_time = self.newest_date
 		for u in all_users:
 			if u.last_checkin<comp_time:
 				users.append(u)
 			else:
 				u.ping()
 		return users
+
+	def colDict(self):
+		info = {'artist':{}, 'top_track':{}, 
+			'newest_track':{}, 'dbID':self.id}
+		info['artist']['name'] = self.name
+		info['artist']['uri'] = self.uri
+		info['artist']['img'] = self.img
+
+		info['top_track']['name'] = self.top_name
+		info['top_track']['uri'] = self.top_uri
+		info['top_track']['date'] = self.top_date.isoformat()
+		info['top_track']['img'] = self.top_img
+
+		info['newest_track']['name'] = self.newest_name
+		info['newest_track']['date'] = self.newest_date.isoformat()
+		info['newest_track']['uri'] = self.newest_uri
+		info['newest_track']['img'] = self.newest_img
+
+		return info
 
 
 @login_manager.user_loader
