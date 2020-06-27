@@ -3,7 +3,7 @@
 
 {% block title %}Band Fan{% endblock %}
 
-<!-- Fix links going into toggle at breakpoint -->
+<!-- Make navbar links turn white when hovered over -->
 
 
 {% block head %}
@@ -16,7 +16,7 @@
 
 
 {% block navbar %}
-<nav class="navbar navbar-default" style="background: #6ec878; border: none; border-radius: 0 0 5px 5px;">
+<nav class="navbar navbar-default" style="background: #6ec878; border: none; border-radius: 0;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-toggle" aria-expanded="false" style="border: 0;">
@@ -25,19 +25,22 @@
 					<div class="hamburger-btn"></div>
 					<div class="hamburger-btn"></div>
                 </button>
-                <a class="navbar-brand" style="color: #242224;" href="{{ url_for('main.index') }}">Microblog</a>
+                <a class="navbar-brand" style="color: #242224;" href="{{ url_for('main.index') }}">
+                	Band-Fan <img src="{{ url_for('static', filename='icons/guitar-black.png') }}" style="display: inline-block;" width="28" height="28" alt="Icon">
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-toggle">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}" style="color: #242224;">Home</a></li>
-                    <li><a href="#" style="color: #242224;">Explore</a></li>
+                    <li><a href="{{ url_for('main.search')}}" style="color: #242224;">Search</a></li>
+                    <li><a href="{{ url_for('main.testDB')}}" style="color: #242224;">DB</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('auth.login') }}" style="color: #242224;">Login</a></li>
                     {% else %}
                     <li><a href="#" style="color: #242224;">Profile</a></li>
-                    <li><a href="{{ url_for('auth.logour') }}" style="color: #242224;">Logout</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}" style="color: #242224;">Logout</a></li>
                     {% endif %}
                 </ul>
             </div>
