@@ -5,12 +5,8 @@ from .. import db
 from ..models import User
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm, \
     PasswordResetForm, ChangeEmailForm
+from datetime import date
 
-'''
-Bugs:
- - Login might not submit correctly
- - Register might not submit correctly
-'''
 
 # Might need more
 @auth.before_app_request
@@ -25,6 +21,8 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
+            current_user.last_login = date.today()
+            db.session.commit()
             next = request.args.get('next')
             if next is not None and next.startswith('/'):
                 return redirect(next)
@@ -46,7 +44,6 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(email=form.email.data.lower(),
-                    username=form.username.data,
                     password=form.password.data)
         db.session.add(user)
         db.session.commit()
