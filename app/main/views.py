@@ -14,12 +14,6 @@ def index():
     return render_template('main/index.html')
 
 
-@main.route('/profile', methods=['GET'])
-@login_required
-def profile():
-	return render_template('a.html')
-
-
 @main.route('/myBands', methods=['GET'])
 @login_required
 def myBands():

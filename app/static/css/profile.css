@@ -1,0 +1,85 @@
+/* 
+	Delete band colors,
+	 they're updated to 
+	 app colors
+*/
+.title {
+  margin-top: calc(1px + (12 - 1) * ((100vw - 520px) / (1600 - 520)));
+  text-align: center;
+  font-weight: bold;
+  color: #6ec878;
+  font-size: 64px;
+}
+
+.form-box {
+  height: auto;
+  background: #564654;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0;
+}
+
+.form-title {
+  margin-top: 10px;
+  margin-bottom: 6px;
+  font-size: 32px;
+  letter-spacing: 1x;
+  color: #6ec878;
+}
+
+.form-fields {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.form-field {
+  background-color: #564654;
+  border: none;
+  outline: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  border-bottom: 2px solid #6ec878;
+  border-radius: 0px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin-bottom: 36px;
+  color: #f4f0f8;
+}
+
+.form-field:focus {
+  border-bottom: 2px solid #6ec878;
+  box-shadow: none;
+  outline: 0;
+  background-color: #564654;
+  color: #f4f0f8;
+}
+
+.form-control-label {
+  font-size: 11px;
+  color: #f4f0f8;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.form-button {
+  float: right;
+  text-align: right;
+  margin-bottom: 26px;
+}
+
+.btn-submit {
+  background: #564654;
+  border-color: #6ec878;
+  border-radius: 6px;
+  color: #6ec878;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+  background: #6ec878;
+  border-color: #6ec878;
+  color: #242224;
+}
+
+/*# sourceMappingURL=profile.css.map */

@@ -79,9 +79,38 @@ def change_email():
             return redirect(url_for('main.inedx'))
         else:
             flash('Invalid Email Update')
-    return render_template('auth/change-email')
+    return render_template('auth/change-email.html')
 
 
 @auth.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     pass
+
+
+@auth.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    passwordForm = ChangePasswordForm()
+    if passwordForm.validate_on_submit():
+        if current_user.verify_password(passwordForm.old_password.data):
+            current_user.password(passwordForm.new_password.data)
+            db.session.commit()
+            flash('Password Succesfully Updated')
+            return redirect(url_for('main.index'))
+        else:
+            flash('Invalid Password')
+
+
+    emailForm = ChangeEmailForm()
+    if emailForm.validate_on_submit():
+        if current_user.verify_password(emailForm.password.data):
+            current_user.email = emailForm.new_email.data
+            db.session.commit()
+            flash('Email Succesfully Updated')
+            return redirect(url_for('main.index'))
+        else:
+            flash('Invalid Email')
+
+    return render_template('auth/profile.html', 
+        emailForm=emailForm, passwordForm=passwordForm)
+
