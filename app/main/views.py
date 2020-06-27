@@ -20,13 +20,21 @@ def profile():
 	return render_template('a.html')
 
 
-#Test what happens when there are no results
+@main.route('/myBands', methods=['GET'])
+@login_required
+def myBands():
+	return render_template('a.html')
+
+
 @main.route('/search', methods=['GET', 'POST'])
 def search():
 	form = SearchForm()
 	if form.validate_on_submit():
 		artists = Spotify().spotifySearch(form.search.data)
-		session['results'] = artists if artists else {['No results, try different search term']:['No results, try different search term']}
+		if not artists:
+			flash('No results for "%s".  Try a different search term.' % 
+				form.search.data)
+		session['results'] = artists 
 		return redirect(url_for('.search'))
 	results = session.pop('results', None)
 	return render_template('main/search.html', form=form, results=results)
@@ -38,7 +46,6 @@ def band(bandID):
 	return render_template('main/band.html', info=artistInfo)
 
 
-#Untested db
 @main.route('/addBand/<bandID>', methods=['GET'])
 @login_required
 def addBand(bandID):
@@ -54,15 +61,14 @@ def addBand(bandID):
 
 	if followsCheck:
 		flash('You are already following %s' % artistInfo['artist']['name'])
-		return redirect( url_for('main/addBand', 
+		return redirect( url_for('main.addBand', 
 			bandID=artistInfo['artist']['uri']))
 
 	follows = Follow(follower_id=current_user.id, 
 		band_following_id=dbID)
 	db.session.add(follows)
 	db.session.commit()
-	#return redirect(url_for('main/myBands'))
-	return redirect(url_for('main.search'))
+	return redirect(url_for('main/myBands'))
 
 
 #Temp button in navbar for testing, delete on production

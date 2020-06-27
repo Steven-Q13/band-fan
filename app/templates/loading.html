@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Band-Fan Loading{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+{% endblcok %}
+
+
+{% block page_content %}
+<!-- Loading Bubble -->
+<div class="bubble">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+{% endblock %}
