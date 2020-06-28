@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Band-Fan Login{% endblock %}
+{% block title %}Band-Fan Register{% endblock %}
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
 {% endblock %}
 
-<!-- Fix generating errors for invalid field submission-->
+<!--
+	Make back to login link look like reset link on login pagel
+ -->
 
 {% block page_content %}
-<div class="container">
+<div class="container" style="margin-bottom: 24px;">
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 
 	<div class="col-lg-6 col-md-8 col-sm-8 col-12 login-box">
@@ -37,6 +39,12 @@
 					{{ form.submit(class_='btn btn-login') }}
 				</div>
 			</form>
+		</div>
+
+		<div class="row">
+			<div class="login-redirects">
+				<p><br style="line-height: 60px">Back to: <a href="{{ url_for('auth.login') }}" class="login-link">Login</a>
+			</div>
 		</div>
 	</div>
 	
