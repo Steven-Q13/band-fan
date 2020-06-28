@@ -16,3 +16,9 @@ venv/
 
 #Dev notes
 *.txt
+
+#Local config info
+config.py
+
+#Files used for scss compiling
+*.map

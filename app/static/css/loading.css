@@ -1,3 +1,8 @@
+/* 
+	Delete band colors,
+	 they're updated to 
+	 app colors
+*/
 * {
   padding: 0;
   margin: 0;
@@ -23,12 +28,13 @@ body {
   right: 0;
   margin: auto;
   overflow: visible;
-  background: #f4f4f4;
+  background: #6ec878;
   border-radius: 50%;
 }
 
 /* Positioning dots in Page */
 .bubble > div {
+  background-color: #242224;
   position: absolute;
   top: 2.5rem;
   left: 2.5rem;
@@ -47,35 +53,6 @@ body {
   height: 1em;
   width: 1em;
   border-radius: 50%;
-}
-
-/* Indiv Colors */
-.bubble > div:nth-child(1)::before {
-  background-color: #D70E26;
-}
-
-.bubble > div:nth-child(2)::before {
-  background-color: #ffb328;
-}
-
-.bubble > div:nth-child(3)::before {
-  background-color: #f7f731;
-}
-
-.bubble > div:nth-child(4)::before {
-  background-color: #019829;
-}
-
-.bubble > div:nth-child(5)::before {
-  background-color: #3468E9;
-}
-
-.bubble > div:nth-child(6)::before {
-  background-color: #d50ee3;
-}
-
-.bubble > div:nth-child(7)::before {
-  background-color: #242224;
 }
 
 /* Circular Movement */
