@@ -1,9 +1,4 @@
 @charset "UTF-8";
-/* 
-	Delete band colors,
-	 they're updated to 
-	 app colors
-*/
 .login-box {
   margin-top: calc(8px + (140 - 8) * ((100vw - 520px) / (1600 - 520)));
   height: auto;

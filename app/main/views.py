@@ -8,21 +8,17 @@ from ..api_calls import Spotify
 from datetime import date
 
 
+#Might need more
+@main.before_app_request
+def before_request():
+	pass
+
 
 @main.route('/', methods=['GET'])
 def index():
     return render_template('main/index.html')
 
 
-@main.route('/myBands', methods=['GET'])
-@login_required
-def myBands():
-	return render_template('a.html')
-
-
-'''
-	Paginate - Probably Not
-'''
 @main.route('/search', methods=['GET', 'POST'])
 def search():
 	form = SearchForm()
@@ -58,10 +54,7 @@ def band(bandID):
 def addBand(bandID):
 	artistInfo = artistDict(bandID)
 	dbID = artistInfo['dbID'] if 'dbID' in artistInfo else makeBandCol(artistInfo)
-
-	follows = Follow(follower_id=current_user.id, 
-		band_following_id=dbID)
-	db.session.add(follows)
+	current_user.follow(dbID)
 	db.session.commit()
 	flash('You are now following %s' % artistInfo['artist']['name'])
 	return redirect(url_for('main.following'))
@@ -71,22 +64,10 @@ def addBand(bandID):
 @login_required
 def removeBand(bandID):
 	artistInfo = artistDict(bandID)
-
 	if 'dbID' in artistInfo:
 		dbID = artistInfo['dbID']
-	else:
-		'''
-			Throw Error bad path, since the band doesn't
-				already exist you can't remove a follower
-		'''
-		pass
-
-	deleteCol = Follow.query.filter_by(follower_id=current_user.id, band_following_id=dbID).first()
-	'''
-			Throw Error if row doesn't exist
-	'''
-	db.session.delete(deleteCol)
-	db.session.commit()
+		current_user.unfollow(dbID)
+		db.session.commit()
 	flash('You are no longer following %s' % artistInfo['artist']['name'])
 	return redirect(url_for('main.following'))
 
@@ -116,8 +97,7 @@ def following():
 
 
 '''
-	Completely Wrong
-	Same ordering issue as main.following
+	Same ordering issue as main.following - maybe custon SQL cmd?
 '''
 @main.route('/updates', methods=['GET'])
 @login_required
@@ -126,24 +106,19 @@ def updates():
 	page = request.args.get('page', 1, type=int)
 	pagination = current_user.following.paginate(page, per_page=8, error_out=False)
 	following_links = pagination.items
-	bands = []
 	new_releases = []
-	new_band_count = 0
-	last_login = session['last_login'] if 'last_login' in session else None
-	for i in following_links:
-		band = Band.query.filter_by(id=i.follower_id).order_by(Band.newest_date.desc()).first()
+	last_login = date.fromisoformat(session['last_login']) if 'last_login' in session else date.today()
+	l = current_user.last_login
 
-		if last_login != None and band.newest_date >= last_login:
-			new_band_count += 1
+	for i in following_links:
+		band = Band.query.filter_by(id=i.band_following_id).first()
+
+		if band.newest_date >= last_login:
 			new_releases.append(band.colDict())
-		else:
-			bands.append(band.colDict())
-	bands.sort(key=lambda band: band['newest_track']['date'])
+
 	new_releases.sort(key=lambda new_releases: new_releases['newest_track']['date'])
-	bands.reverse()
 	new_releases.reverse()
-	return render_template('main/updates.html', bands=bands, 
-		new_releases=new_releases, count=new_band_count,
+	return render_template('main/updates.html', bands=new_releases, 
 		pagination=pagination)
 
 

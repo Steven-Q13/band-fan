@@ -9,7 +9,7 @@ body {
   text-align: center;
   font-weight: bold;
   color: #6ec878;
-  font-size: 46px;
+  font-size: 36px;
 }
 
 .col-centered {
@@ -20,8 +20,9 @@ body {
 .info-text {
   margin-top: 16px;
   margin-bottom: 8px;
-  font-size: 24px;
+  font-size: 20px;
   color: #f4f0f8;
+  text-align: center;
 }
 
 .list-item {
@@ -56,4 +57,4 @@ body {
   margin-right: 12px;
 }
 
-/*# sourceMappingURL=following.css.map */
+/*# sourceMappingURL=updates.css.map */

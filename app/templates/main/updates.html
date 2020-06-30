@@ -1,26 +1,24 @@
 {% extends "base.html" %}
-{% import "_macros.html" as macros %}
 
-{% block Title %}Band-Fan Following{% endblock %}
+{% block Title %}Band-Fan Updates{% endblock %}
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/following.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/updates.css') }}">
 {% endblock %}
+
 
 {% block page_content %}
 <div class="container">
 
     <div class="col-12 title">
-        Bands Followed:
+        Bands with New Releases since last Checkin:
     </div>
     
     <div class="row">
         <div class="col-xs-11 col-sm-11 col-md-11 col-lg-9 col-centered">
             {% if not bands %}
-            <div class="info-text">You're not currently following any bands.
-            Go to "Search" to find new bands to follow, click on the ones 
-            your interested in and click the "Add Band" button.
+            <div class="info-text">None of the bands you follow have had any new releases since your last checkin.
             </div>
             {% else %}
 
@@ -47,3 +45,4 @@
     </div>
 </div>
 {% endblock %}
+ 

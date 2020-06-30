@@ -13,7 +13,6 @@ from datetime import date
 def before_request():
     pass
 
-
 '''
     Fix generating errors messages when form input fails validators
 '''
@@ -24,7 +23,7 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
-            session['last_login'] = current_user.last_login
+            session['last_login'] = str(current_user.last_login)
             current_user.last_login = date.today()
             db.session.commit()
             next = request.args.get('next')

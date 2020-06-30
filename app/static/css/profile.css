@@ -1,8 +1,3 @@
-/* 
-	Delete band colors,
-	 they're updated to 
-	 app colors
-*/
 .title {
   margin-top: calc(1px + (12 - 1) * ((100vw - 520px) / (1600 - 520)));
   text-align: center;

@@ -19,7 +19,7 @@ class Follow(db.Model):
 	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
 								  primary_key=True)
 	#Can probably delete
-	last_checkin = db.Column(db.DateTime, default=date.today)
+	last_checkin = db.Column(db.Date(), default=date.today)
 
 	def ping(self):
 		self.last_checkin = datetime.utcnow()
@@ -58,24 +58,19 @@ class User(UserMixin, db.Model):
 			return True
 		return False
 
-	def ping(self):
-		self.lastseen = datetime.utcnow()
+	def follow(self, bandID):
+		if not self.is_following(bandID):
+			row = Follow(follower_id=self.id, band_following_id=bandID)
+			db.session.add(row)
 
-	def follow(self, band):
-		if not self.is_following(band):
-			f = Follow(follower=self, band_following=band)
-			db.session.add(f)
+	def unfollow(self, bandID):
+		row = self.following.filter_by(band_following_id=bandID).first()
+		if row:
+			db.session.delete(row)
 
-	def unfollow(self, band):
-		f = self.followed.filter_by(band_following_id=band.id).first()
-		if f:
-			db.session.delete(f)
-
-	def is_following(self, band):
-		if band.id is not None:
-			return False
+	def is_following(self, bandID):
 		return self.following.filter_by(
-			band_following_id=band.id).first() is not None
+			band_following_id=bandID).first() is not None
 
 	is_logged_in = True
 
@@ -105,8 +100,6 @@ class Band(db.Model):
 								cascade='all, delete-orphan')
 	last_update = db.Column(db.Date(), default=date.today)
 
-	def ping(self):
-		self.last_update = db.datetime.utcnow
 
 	def users_to_notify(self):
 		all_users = self.following.all()
