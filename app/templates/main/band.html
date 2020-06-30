@@ -7,29 +7,36 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/band.css') }}">
 {% endblock %}
 
+
 {% block page_content %}
 <div class="container">
     <div class="row">
         <div class="col-xs-11 col-sm-11 col-md-11 col-lg-9 col-centered">
             <div class="row header">
                 <div class="col-sm-4 col-md-4">
-                    <img src="{{ info['artist']['img'] }}" alt="" class="img-rounded img-responsive" width="300px" height="300px"/>
+                    <img src="{{ info['artist']['img'] }}" alt="" class="img-rounded img-responsive" width="1000px" height="1000px"/>
                 </div>
                 
                 <div class="col-sm-8 col-md-8 right-text header-box">
                     {% if not current_user.is_anonymous %}
                     <div class="row">
                         <div class="col-11 login-button">
+                            {% if follows_band %}
+                            <form action="{{ url_for('main.removeBand', bandID=info['artist']['uri']) }}">
+                                <button type="submit" class="btn btn-login">Remove Band</button>
+                            </form>
+                            {% else %}
                             <form action="{{ url_for('main.addBand', bandID=info['artist']['uri']) }}">
                                 <button type="submit" class="btn btn-login">Add Band</button>
                             </form>
+                            {% endif %}
                         </div>
                     </div>
                     {% endif %}
                     
                     <div class="row">
                         <div class="col-11 header-text">
-                            <h2>Band: {{ info['artist']['name'] }}</h2>
+                            {{ info['artist']['name'] }}
                         </div>
                     </div>
                 </div>

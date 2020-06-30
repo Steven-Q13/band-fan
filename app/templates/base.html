@@ -31,7 +31,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}" style="color: #242224;">Home</a></li>
                     <li><a href="{{ url_for('main.search')}}" style="color: #242224;">Search</a></li>
-                    <li><a href="{{ url_for('main.testDB')}}" style="color: #242224;">DB</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}

@@ -46,15 +46,16 @@ body {
 }
 
 .header-text {
-    padding-top: 70px;
+    padding-top: 72px;
     padding-left: 8px;
+    font-size: calc(28px + (56 - 28) * ((100vw - 560px) / (1600 - 560)));
     display: flex;
     align-items: center; /* align vertical */
 }
 
 @media (max-width:991.98px) {
     .header-text {
-        padding-top: 40px;
+        padding-top: 48px;
     }
 }
 

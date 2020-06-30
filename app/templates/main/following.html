@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block Title %}Band-Fan Following {% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/following.css') }}">
+{% endblock %}
+
+{% block page_content %}
+<div class="container">
+
+    <div class="col-12 title">
+        Bands Followed:
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-9 col-centered">
+            {% if not bands %}
+            <div class="info-text">You're not currently following any bands.
+            Go to "Search" to find new bands to follow, click on the ones 
+            your interested in and click the "Add Band" button.
+            </div>
+            {% else %}
+
+            {% for i in bands %}
+            <ul class="list-group">
+                <a href="{{ url_for('main.band', bandID=i['artist']['uri']) }}" class="list-group-item list-item">
+                    <div class="text-box">
+                        <img src="{{ i['artist']['img'] }}" class="img-left" alt="Band Pic" width="108" height="108">
+                        {{ i['artist']['name'] }}
+                        <br>
+                        Latest Album: {{ i['newest_track']['name'] }}
+                        <br>
+                        Released: {{ i['newest_track']['date'] }}
+                    </div>
+                </a>
+            </ul>
+            {% endfor %}
+            <div class="pagination">
+                {{ macros.pagination_widget(pagination, 'main.following') }}
+            </div>
+
+            {% endif %} 
+        </div>
+    </div>
+</div>
+{% endblock %}

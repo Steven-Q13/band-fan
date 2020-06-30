@@ -18,6 +18,7 @@ class Follow(db.Model):
 							primary_key=True)
 	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
 								  primary_key=True)
+	#Can probably delete
 	last_checkin = db.Column(db.DateTime, default=date.today)
 
 	def ping(self):

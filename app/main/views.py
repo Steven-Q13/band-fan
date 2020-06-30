@@ -20,6 +20,9 @@ def myBands():
 	return render_template('a.html')
 
 
+'''
+	Paginate - Probably Not
+'''
 @main.route('/search', methods=['GET', 'POST'])
 def search():
 	form = SearchForm()
@@ -37,55 +40,111 @@ def search():
 @main.route('/band/<bandID>', methods=['GET', 'POST'])
 def band(bandID):
 	artistInfo = artistDict(bandID)
-	return render_template('main/band.html', info=artistInfo)
+
+	follows_band = False
+	if 'dbID' in artistInfo:
+		dbID = artistInfo['dbID']
+		follows_check = Follow.query.filter_by(follower_id=current_user.id,
+			band_following_id=dbID).first()
+		if follows_check:
+			follows_band = True
+
+	return render_template('main/band.html', info=artistInfo, 
+		follows_band=follows_band)
 
 
 @main.route('/addBand/<bandID>', methods=['GET'])
 @login_required
 def addBand(bandID):
 	artistInfo = artistDict(bandID)
-
-	followCheck = None
-	if 'dbID' in artistInfo:
-		dbID = artistInfo['dbID']
-		followsCheck = Follow.query.filter_by(follower_id=current_user.id,
-			band_following_id=dbID).first()
-	else:
-		dbID = makeBandCol(artistInfo)
-
-	if followsCheck:
-		flash('You are already following %s' % artistInfo['artist']['name'])
-		return redirect( url_for('main.addBand', 
-			bandID=artistInfo['artist']['uri']))
+	dbID = artistInfo['dbID'] if 'dbID' in artistInfo else makeBandCol(artistInfo)
 
 	follows = Follow(follower_id=current_user.id, 
 		band_following_id=dbID)
 	db.session.add(follows)
 	db.session.commit()
-	return redirect(url_for('main/myBands'))
+	flash('You are now following %s' % artistInfo['artist']['name'])
+	return redirect(url_for('main.following'))
 
 
-#Temp button in navbar for testing, delete on production
-@main.route('/testDB', methods=['GET'])
-def testDB():
-	band = Band.query.all()
-	users = User.query.all()
-	follows = Follow.query.all()
+@main.route('/removeBand/<bandID>', methods=['GET'])
+@login_required
+def removeBand(bandID):
+	artistInfo = artistDict(bandID)
 
-	with open('./dbContents.txt', 'w') as f:
-		f.write('Band:')
-		for i in band:
-			f.write('\tId: %s\t Name: %s' % (i.id, i.name))
-		f.write('\n\n')
-		f.write('User:')
-		for j in users:
-			f.write('\tId: %s\t Name: %s' % (j.id, j.email))
-		f.write('\n\n')
-		f.write('Follow:')
-		for k in follows:
-			f.write('\tFollower: %s\tBand: %s' % 
-				(k.follower_id, k.band_following_id))
-	return redirect( url_for('main.index') )
+	if 'dbID' in artistInfo:
+		dbID = artistInfo['dbID']
+	else:
+		'''
+			Throw Error bad path, since the band doesn't
+				already exist you can't remove a follower
+		'''
+		pass
+
+	deleteCol = Follow.query.filter_by(follower_id=current_user.id, band_following_id=dbID).first()
+	'''
+			Throw Error if row doesn't exist
+	'''
+	db.session.delete(deleteCol)
+	db.session.commit()
+	flash('You are no longer following %s' % artistInfo['artist']['name'])
+	return redirect(url_for('main.following'))
+
+
+'''
+	Need to be able to order the many-to-many relationship with
+		intermediary 'Follow' via a column in 'Band', while querying
+		a column in 'Follow'
+'''
+@main.route('/following', methods=['GET'])
+@login_required
+def following(): 
+	#Requires the ordering
+	following_links = current_user.following.all()
+
+	page = request.args.get('page', 1, type=int)
+	pagination = current_user.following.paginate(page, per_page=8, error_out=False)
+	following_links = pagination.items
+	bands = []
+	for i in following_links:
+		band = Band.query.filter_by(id=i.band_following_id).first()
+		bands.append(band.colDict())
+	bands.sort(key=lambda band: band['newest_track']['date'])
+	bands.reverse()
+	return render_template('main/following.html', bands=bands, 
+		pagination=pagination)
+
+
+'''
+	Completely Wrong
+	Same ordering issue as main.following
+'''
+@main.route('/updates', methods=['GET'])
+@login_required
+def updates(): 
+	following_links = current_user.following.all()
+	page = request.args.get('page', 1, type=int)
+	pagination = current_user.following.paginate(page, per_page=8, error_out=False)
+	following_links = pagination.items
+	bands = []
+	new_releases = []
+	new_band_count = 0
+	last_login = session['last_login'] if 'last_login' in session else None
+	for i in following_links:
+		band = Band.query.filter_by(id=i.follower_id).order_by(Band.newest_date.desc()).first()
+
+		if last_login != None and band.newest_date >= last_login:
+			new_band_count += 1
+			new_releases.append(band.colDict())
+		else:
+			bands.append(band.colDict())
+	bands.sort(key=lambda band: band['newest_track']['date'])
+	new_releases.sort(key=lambda new_releases: new_releases['newest_track']['date'])
+	bands.reverse()
+	new_releases.reverse()
+	return render_template('main/updates.html', bands=bands, 
+		new_releases=new_releases, count=new_band_count,
+		pagination=pagination)
 
 
 def artistDict(id):

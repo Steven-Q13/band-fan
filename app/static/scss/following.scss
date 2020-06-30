@@ -1,0 +1,59 @@
+@use "color";
+
+body {
+    background: color.$app-black;
+    color: color.$app-green;
+}
+
+.title {
+    margin-top: calc(1px + (12 - 1) * ((100vw - 520px) / (1600 - 520)));
+    margin-bottom: 0;
+    text-align: center;
+    font-weight: bold;
+    color: color.$app-green;
+    font-size: 46px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.info-text {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 24px;
+    color: color.$app-white;
+}
+
+.list-item {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    background: color.$app-gray;
+}
+
+.text-box {
+    overflow: auto;
+    padding: 12px;
+    color: color.$app-green;
+    background: color.$app-gray;
+    display: flex;
+    align-items: center;
+}
+
+.text-box:hover {
+    background: color.$app-green;
+    color: color.$app-black;
+}
+
+.text-box:active {
+    background: color.$app-green;
+    color: color.$app-white;
+}
+
+.img-left {
+  float: left;
+  margin-right: 12px;
+}

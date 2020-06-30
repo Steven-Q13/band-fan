@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, session 
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
@@ -14,6 +14,9 @@ def before_request():
     pass
 
 
+'''
+    Fix generating errors messages when form input fails validators
+'''
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -21,6 +24,7 @@ def login():
         user = User.query.filter_by(email=form.email.data.lower()).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
+            session['last_login'] = current_user.last_login
             current_user.last_login = date.today()
             db.session.commit()
             next = request.args.get('next')
@@ -39,6 +43,9 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
+'''
+    Fix generating errors messages when form input fails validators
+'''
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -52,8 +59,6 @@ def register():
     return render_template('auth/register.html', form=form)
 
 
-# Might need to add old row with updated column to db
-# to make change to user's password
 @auth.route('/change-password', methods=['GET', 'POST'])
 def change_password():
     form = ChangePasswordForm
