@@ -8,12 +8,6 @@ from ..api_calls import Spotify
 from datetime import date
 
 
-#Might need more
-@main.before_app_request
-def before_request():
-	pass
-
-
 @main.route('/', methods=['GET'])
 def index():
     return render_template('main/index.html')
@@ -72,36 +66,36 @@ def removeBand(bandID):
 	return redirect(url_for('main.following'))
 
 
-'''
-	Need to be able to order the many-to-many relationship with
-		intermediary 'Follow' via a column in 'Band', while querying
-		a column in 'Follow'
-'''
 @main.route('/following', methods=['GET'])
 @login_required
 def following(): 
-	#Requires the ordering
-	following_links = current_user.following.all()
-
 	page = request.args.get('page', 1, type=int)
-	pagination = current_user.following.paginate(page, per_page=8, error_out=False)
-	following_links = pagination.items
+	pagination = db.session.query(Band).filter(User.id == current_user.id).order_by(Band.newest_date.desc()).paginate(page, per_page=8)
 	bands = []
-	for i in following_links:
-		band = Band.query.filter_by(id=i.band_following_id).first()
-		bands.append(band.colDict())
-	bands.sort(key=lambda band: band['newest_track']['date'])
-	bands.reverse()
+	for i in pagination.items:
+		bands.append(i.colDict())
+
 	return render_template('main/following.html', bands=bands, 
 		pagination=pagination)
 
 
 '''
-	Same ordering issue as main.following - maybe custon SQL cmd?
+	Untested
 '''
 @main.route('/updates', methods=['GET'])
 @login_required
-def updates(): 
+def updates():
+	last_login = date.fromisoformat(session['last_login']) if 'last_login' in session else date.today()
+	page = request.args.get('page', 1, type=int)
+	pagination = db.session.query(Band).filter(User.id == current_user.id, Band.newest_date >= last_login).order_by(Band.newest_date.desc()).paginate(page, per_page=8)
+	new_releases = []
+	for i in pagination.items:
+		new_releases.append(i.colDict())
+
+	return render_template('main/updates.html', bands=new_releases, 
+		pagination=pagination)
+
+	'''
 	following_links = current_user.following.all()
 	page = request.args.get('page', 1, type=int)
 	pagination = current_user.following.paginate(page, per_page=8, error_out=False)
@@ -120,6 +114,7 @@ def updates():
 	new_releases.reverse()
 	return render_template('main/updates.html', bands=new_releases, 
 		pagination=pagination)
+	'''
 
 
 def artistDict(id):
