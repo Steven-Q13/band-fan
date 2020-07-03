@@ -1,0 +1,29 @@
+/*
+	$app-link: #6e97c8;
+	$app-link-visited: #5d7b9e;
+ */
+.info-text {
+  color: #f4f0f8;
+  font-size: calc(20px + (32 - 20) * ((100vw - 380px) / (1600 - 380)));
+  /*text-align: center;*/
+  margin-top: calc(1px + (52 - 1) * ((100vw - 380px) / (1600 - 380)));
+  margin-bottom: 16px;
+}
+
+.info-text > a:link {
+  color: #9edba5;
+}
+
+.info-text > a:visited {
+  color: #9edba5;
+}
+
+.info-text > a:hover {
+  color: #6ec878;
+}
+
+.info-text > a:active {
+  color: #6ec878;
+}
+
+/*# sourceMappingURL=info.css.map */

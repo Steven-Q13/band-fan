@@ -1,0 +1,25 @@
+@use "color";
+
+.info-text {
+	color: color.$app-white;
+	font-size: calc(20px + (32 - 20) * ((100vw - 380px) / (1600 - 380)));
+	/*text-align: center;*/
+	margin-top: calc(1px + (52 - 1) * ((100vw - 380px) / (1600 - 380)));
+	margin-bottom: 16px;
+}
+
+.info-text > a:link {
+    color: color.$app-link;
+}
+
+.info-text > a:visited {
+    color: color.$app-link;
+}
+
+.info-text > a:hover {
+    color: color.$app-link-visited;
+}
+
+.info-text > a:active {
+    color: color.$app-link-visited;
+}

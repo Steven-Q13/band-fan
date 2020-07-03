@@ -30,13 +30,13 @@
             <div class="collapse navbar-collapse" id="navbar-toggle">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}" style="color: #242224;">Home</a></li>
-                    <li><a href="{{ url_for('main.search')}}" style="color: #242224;">Search</a></li>
+                    <li><a href="{{ url_for('main.info')}}" style="color: #242224;">Info</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
                     <li><a href="{{ url_for('auth.login') }}" style="color: #242224;">Login</a></li>
                     {% else %}
-                    <li><a href="{{ url_for('auth.profile') }}" style="color: #242224;">Profile</a></li>
+                    <li><a href="{{ url_for('auth.settings') }}" style="color: #242224;">Settings</a></li>
                     <li><a href="{{ url_for('auth.logout') }}" style="color: #242224;">Logout</a></li>
                     {% endif %}
                 </ul>

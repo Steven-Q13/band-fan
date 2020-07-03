@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Band-Fan Info{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/info.css') }}">
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+	<div class="col-lg-9 col-md-9 col-sm-10 col-xs-11 col-centered info-text">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Band Fan allows you to keep up to date with your favorite bands.  Just go to <a href="{{ url_for('main.search') }}">Search</a> and look up your favorite bands.  Click on a band that you wish to follow, you'll be redirected to that band's page where you can click on the "Add Band" button.  Adding a band means that you are following it and it will show up on the <a href="{{ url_for('main.following') }}">My Bands</a> page.  Whenever a band that your following releases a new track you'll get an email notification that there has been a new release.  You can view all the bands with new releases since you last checked in on the <a href="{{ url_for('main.updates') }}">Updates</a> page.
+	</div>
+</div>
+
+{% endblock %}

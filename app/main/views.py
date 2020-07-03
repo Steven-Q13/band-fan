@@ -13,6 +13,11 @@ def index():
     return render_template('main/index.html')
 
 
+@main.route('/info', methods=['GET'])
+def info():
+	return render_template('main/info.html')
+
+
 @main.route('/search', methods=['GET', 'POST'])
 def search():
 	form = SearchForm()
