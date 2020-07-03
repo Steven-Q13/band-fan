@@ -9,60 +9,58 @@
 
 
 {% block page_content %}
-<div class="container">
-    <div class="row">
-        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-9 col-centered">
-            <div class="row header">
-                <div class="col-sm-4 col-md-4">
-                    <img src="{{ info['artist']['img'] }}" alt="" class="img-rounded img-responsive" width="1000px" height="1000px"/>
-                </div>
+<div class="row">
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-9 col-centered">
+        <div class="row header">
+            <div class="col-sm-4 col-md-4">
+                <img src="{{ info['artist']['img'] }}" alt="" class="img-rounded img-responsive" width="1000px" height="1000px"/>
+            </div>
                 
-                <div class="col-sm-8 col-md-8 right-text header-box">
-                    {% if not current_user.is_anonymous %}
-                    <div class="row">
-                        <div class="col-11 login-button">
-                            {% if follows_band %}
-                            <form action="{{ url_for('main.removeBand', bandID=info['artist']['uri']) }}">
-                                <button type="submit" class="btn btn-login">Remove Band</button>
-                            </form>
-                            {% else %}
-                            <form action="{{ url_for('main.addBand', bandID=info['artist']['uri']) }}">
-                                <button type="submit" class="btn btn-login">Add Band</button>
-                            </form>
-                            {% endif %}
-                        </div>
-                    </div>
+            <div class="col-sm-8 col-md-8 right-text header-box">
+            {% if not current_user.is_anonymous %}
+                <div class="row">
+                    <div class="col-11 login-button">
+                    {% if follows_band %}
+                        <form action="{{ url_for('main.removeBand', bandID=info['artist']['uri']) }}">
+                            <button type="submit" class="btn btn-login">Remove Band</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('main.addBand', bandID=info['artist']['uri']) }}">
+                            <button type="submit" class="btn btn-login">Add Band</button>
+                        </form>
                     {% endif %}
+                    </div>
+                </div>
+            {% endif %}
                     
-                    <div class="row">
-                        <div class="col-11 header-text">
-                            {{ info['artist']['name'] }}
-                        </div>
+                <div class="row">
+                    <div class="col-11 header-text">
+                        {{ info['artist']['name'] }}
                     </div>
                 </div>
             </div>
-
-            <ul class="list-group list-margin">
-                <li class="list-group-item list-item">
-                    <div class="text-box">
-                        <img src="{{ info['top_track']['img'] }}" class="img-left" alt="Album Pic" width="96" height="96"> 
-
-                        Most Popular Track: {{ info['top_track']['name'] }}
-                        <br>
-                        Released: {{ info['top_track']['date'] }}
-                    </div>
-                </li>
-                <li class="list-group-item list-item" style="border-top: 2px solid;">
-                    <div class="text-box">
-                        <img src="{{ info['newest_track']['img'] }}" class="img-left" alt="Album Pic" width="96" height="96"> 
-                            
-                        Most Recent Album: {{ info['newest_track']['name'] }}
-                        <br>
-                        Released: {{ info['newest_track']['date'] }}
-                    </div>
-                </li>
-            </ul>
         </div>
+
+        <ul class="list-group list-margin">
+            <li class="list-group-item list-item">
+                <div class="text-box">
+                    <img src="{{ info['top_track']['img'] }}" class="img-left" alt="Album Pic" width="96" height="96"> 
+
+                    Most Popular Track: {{ info['top_track']['name'] }}
+                    <br>
+                    Released: {{ info['top_track']['date'] }}
+                </div>
+            </li>
+            <li class="list-group-item list-item" style="border-top: 2px solid;">
+                <div class="text-box">
+                    <img src="{{ info['newest_track']['img'] }}" class="img-left" alt="Album Pic" width="96" height="96"> 
+                            
+                    Most Recent Album: {{ info['newest_track']['name'] }}
+                    <br>
+                    Released: {{ info['newest_track']['date'] }}
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 {% endblock %}
