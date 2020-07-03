@@ -1,11 +1,10 @@
+/*
+	$app-link: #6e97c8;
+	$app-link-visited: #5d7b9e;
+ */
 body {
   background: #242224;
   color: #6ec878;
-}
-
-.col-centered {
-  float: none;
-  margin: 0 auto;
 }
 
 .header {

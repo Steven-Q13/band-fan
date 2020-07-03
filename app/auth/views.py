@@ -91,9 +91,9 @@ def reset_password():
     pass
 
 
-@auth.route('/profile', methods=['GET', 'POST'])
+@auth.route('/settings', methods=['GET', 'POST'])
 @login_required
-def profile():
+def settings():
     passwordForm = ChangePasswordForm()
     if passwordForm.validate_on_submit():
         if current_user.verify_password(passwordForm.old_password.data):
@@ -115,6 +115,6 @@ def profile():
         else:
             flash('Invalid Email')
 
-    return render_template('auth/profile.html', 
+    return render_template('auth/settings.html', 
         emailForm=emailForm, passwordForm=passwordForm)
 

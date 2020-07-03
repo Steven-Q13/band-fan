@@ -5,11 +5,6 @@ body {
     color: color.$app-green;
 }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
-}
-
 .header {
     margin-top: calc(12px + (80 - 12) * ((100vw - 520px) / (1600 - 520)));
 }

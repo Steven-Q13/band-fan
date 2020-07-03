@@ -1,4 +1,8 @@
 @charset "UTF-8";
+/*
+	$app-link: #6e97c8;
+	$app-link-visited: #5d7b9e;
+ */
 .login-box {
   margin-top: calc(8px + (140 - 8) * ((100vw - 520px) / (1600 - 520)));
   height: auto;
@@ -77,15 +81,19 @@
 }
 
 .login-link:link {
-  color: #6e97c8;
+  color: #9edba5;
 }
 
 .login-link:visited {
-  color: #5d7b9e;
+  color: #9edba5;
 }
 
 .login-link:hover {
-  color: #5d7b9e;
+  color: #6ec878;
+}
+
+.login-link:active {
+  color: #6ec878;
 }
 
 .login-redirects {

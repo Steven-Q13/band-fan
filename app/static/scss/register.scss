@@ -83,10 +83,14 @@
 }
 
 .login-link:visited {
-    color: color.$app-link-visited;
+    color: color.$app-link;
 }
 
 .login-link:hover {
+    color: color.$app-link-visited;
+}
+
+.login-link:active {
     color: color.$app-link-visited;
 }
 
