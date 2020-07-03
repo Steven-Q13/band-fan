@@ -1,0 +1,80 @@
+@use "color";
+
+.title {
+	margin-top: calc(1px + (12 - 1) * ((100vw - 520px) / (1600 - 520)));
+	text-align: center;
+	font-weight: bold;
+	color: color.$app-green;
+	font-size: 64px;
+}
+
+.form-box {
+    height: auto;
+    background: color.$app-gray;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0;
+}
+
+.form-title {
+    margin-top: 10px;
+    margin-bottom: 6px;
+    font-size: 32px;
+    letter-spacing: 1x;
+    color: color.$app-green;
+}
+
+.form-fields {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.form-field {
+    background-color: color.$app-gray;
+    border: none;
+    outline: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    border-bottom: 2px solid color.$app-green;
+    border-radius: 0px;
+    font-weight: bold;
+    padding-left: 0px;
+    margin-bottom: 36px;
+    color: color.$app-white;
+}
+
+.form-field:focus {
+    border-bottom: 2px solid color.$app-green;
+    box-shadow: none;
+    outline: 0;
+    background-color: color.$app-gray;
+    color: color.$app-white;
+}
+
+.form-control-label {
+    font-size: 11px;
+    color: color.$app-white;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.form-btn {
+    float: right;
+    text-align: right;
+    margin-bottom: 26px;
+}
+
+.btn-submit {
+    background: color.$app-gray;
+    border-color: color.$app-green;
+    border-radius: 6px;
+    color: color.$app-green;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+    background: color.$app-green;
+    border-color: color.$app-green;
+    color: color.$app-black;
+}

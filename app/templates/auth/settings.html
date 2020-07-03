@@ -1,0 +1,88 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends "base.html" %}
+
+{% block title %}Band-Fan Profile{% endblock %}
+
+{% block head  %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block page_content %}
+<div class="col-12 title">
+	Profile
+</div>
+
+
+<div class="container">
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+	<div class="col-lg-6 col-md-8 col-sm-8 col-12">
+		<div class="form-title">Change Email:</div>
+	</div>
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+</div>
+
+<div class="container" style="margin-bottom: 24px;">
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+	<div class="col-lg-6 col-md-8 col-sm-8 col-12 form-box">
+		<div class="row">
+			<br>
+		</div>
+		<div class="col-sm-12 form-fields">
+			<form action="" method="post" novalidate>
+				{{ passwordForm.hidden_tag() }}
+				<label class="form-control-label">OLD PASSWORD</label>
+				{{ passwordForm.old_password(class_='form-control form-field') }}
+				<label class="form-control-label">NEW PASSWORD</label>
+				{{ passwordForm.new_password(class_='form-control form-field') }}
+				<label class="form-control-label">CONFIRM NEW PASSWORD</label>
+				{{ passwordForm.new_password2(class_='form-control form-field') }}
+
+				<div class="col-sm-12 form-btn">
+					{{ passwordForm.submit(class_='btn btn-submit') }}
+				</div>
+			</form>
+		</div>
+		<div class="row">
+			<br>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+</div>
+
+<div class="container">
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+	<div class="col-lg-6 col-md-8 col-sm-8 col-12">
+		<div class="form-title">Change Password:</div>
+	</div>
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+</div>
+
+<div class="container" style="margin-bottom: 24px;">
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+	<div class="col-lg-6 col-md-8 col-sm-8 col-12 form-box">
+		<div class="row">
+			<br>
+		</div>
+
+		<div class="col-sm-12 form-fields">
+			<form action="" method="post" novalidate>
+				{{ emailForm.hidden_tag() }}
+				<label class="form-control-label">NEW EMAIL</label>
+				{{ emailForm.new_email(class_='form-control form-field') }}
+				<label class="form-control-label">PASSWORD</label>
+				{{ emailForm.password(class_='form-control form-field') }}
+				<div class="col-sm-12 form-btn">
+					{{ emailForm.submit(class_='btn btn-submit') }}
+				</div>
+			</form>
+		</div>
+
+		<div class="row">
+			<br>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+</div>
+{% endblock %}
