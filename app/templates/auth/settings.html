@@ -9,21 +9,22 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/settings.css') }}">
 {% endblock %}
 
+<!--
+	Might need to change all outer rows to containers
+ -->
+
 {% block page_content %}
 <div class="col-12 title">
-	Profile
+	Settings
 </div>
-
-
-<div class="container">
+<div class="row">
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 	<div class="col-lg-6 col-md-8 col-sm-8 col-12">
 		<div class="form-title">Change Email:</div>
 	</div>
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 </div>
-
-<div class="container" style="margin-bottom: 24px;">
+<div class="row" style="margin-bottom: 24px;">
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 	<div class="col-lg-6 col-md-8 col-sm-8 col-12 form-box">
 		<div class="row">
@@ -51,7 +52,7 @@
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 </div>
 
-<div class="container">
+<div class="row">
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 	<div class="col-lg-6 col-md-8 col-sm-8 col-12">
 		<div class="form-title">Change Password:</div>
@@ -59,7 +60,7 @@
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 </div>
 
-<div class="container" style="margin-bottom: 24px;">
+<div class="row" style="margin-bottom: 24px;">
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 	<div class="col-lg-6 col-md-8 col-sm-8 col-12 form-box">
 		<div class="row">
@@ -85,4 +86,29 @@
 	</div>
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
 </div>
+
+
+<div class="row" style="margin-bottom: 18px;">
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+	<div class="col-lg-6 col-md-8 col-sm-8 col-12">
+		{% if subscribed %}
+		<div class="form-title">Unsubscribe from Emails:</div>
+		<form action="{{ url_for('auth.unsubscribe') }}">
+			<button type="submit" class="btn btn-submit">Unsubscribe</button>
+		</form>
+		{% else %}
+		<div class="form-title">Subscribe to Emails:</div>
+		<form action="{{ url_for('auth.subscribe') }}">
+			<button type="submit" class="btn btn-submit">Subscribe</button>
+		</form>
+		{% endif %}
+	</div>
+
+	<!--
+		Make button for subscribe change, across for titlw
+	-->
+
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+</div>
+
 {% endblock %}

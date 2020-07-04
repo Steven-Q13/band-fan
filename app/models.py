@@ -18,8 +18,6 @@ class Follow(db.Model):
 							primary_key=True)
 	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
 								  primary_key=True)
-	#Can probably delete
-	last_checkin = db.Column(db.Date(), default=date.today)
 
 	def ping(self):
 		self.last_checkin = datetime.utcnow()
@@ -31,12 +29,20 @@ class User(UserMixin, db.Model):
 	email = db.Column(db.String(64), unique=True, index=True)
 	username = db.Column(db.String(48), unique=True)
 	password_hash = db.Column(db.String(100))
-	signup_date = db.Column(db.Date(), default=date.today)
+
 	last_login = db.Column(db.Date(), default=date.today)
 	following = db.relationship('Follow', 
 		foreign_keys=[Follow.follower_id], 
 		backref=db.backref('following', lazy='joined'),
 		lazy='dynamic', cascade='all, delete-orphan')
+
+	subscribed = db.Column(db.Boolean(), default=True)
+	question1 = db.Column(db.String(256))
+	question2 = db.Column(db.String(256))
+	answer1 = db.Column(db.String(96))
+	answer2 = db.Column(db.String(96))
+
+	latest_song_uri = db.Column(db.String(64))
 
 	@property
 	def password(self):
@@ -49,11 +55,11 @@ class User(UserMixin, db.Model):
 	def verify_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
-	#Need to change to use emails tokens when email auth is used
+
 	@staticmethod
-	def reset_password(users_email, old_password, new_password):
+	def reset_password(users_email, old_password, new_password, answer1, answer2):
 		user = User.query.filter_by(emaail=users_email).first()
-		if user is not None and user.verify_password(old_password):
+		if user is not None and user.verify_password(old_password) and user.answer1==answer1.lower() and user.answer2==answer2.lower():
 			user.password(new_password)
 			return True
 		return False
@@ -71,6 +77,10 @@ class User(UserMixin, db.Model):
 	def is_following(self, bandID):
 		return self.following.filter_by(
 			band_following_id=bandID).first() is not None
+
+	#Ping should email user if they are subscribed that a band has an update
+	def ping(self, new_song_id):
+		pass
 
 	is_logged_in = True
 
@@ -98,7 +108,7 @@ class Band(db.Model):
 												   lazy='joined'),
 								lazy='dynamic',
 								cascade='all, delete-orphan')
-	last_update = db.Column(db.Date(), default=date.today)
+	#last_update = db.Column(db.Date(), default=date.today)
 
 
 	def users_to_notify(self):
@@ -109,7 +119,7 @@ class Band(db.Model):
 			if u.last_checkin<comp_time:
 				users.append(u)
 			else:
-				u.ping()
+				u.ping(self.newest_uri)
 		return users
 
 	def colDict(self):

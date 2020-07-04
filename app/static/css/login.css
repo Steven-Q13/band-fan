@@ -4,7 +4,7 @@
 	$app-link-visited: #5d7b9e;
  */
 .login-box {
-  margin-top: calc(8px + (140 - 8) * ((100vw - 520px) / (1600 - 520)));
+  margin-top: calc(8px + (100 - 8) * ((100vw - 520px) / (1600 - 520)));
   height: auto;
   background: #564654;
   border-radius: 22px;

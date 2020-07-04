@@ -11,6 +11,15 @@ class RegistrationForm(FlaskForm):
 		DataRequired(), EqualTo('password2', 'Passwords must match.'),
 		Regexp('^[A-Za-z0-9]*$', 0,'No special characters'), Length(4,18)])
 	password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+	question1 = StringField('Securtiy Question 1', 
+		validators=[DataRequired(),Length(1,(256))])
+	question2 = StringField('Securtiy Question 2', 
+		validators=[DataRequired(),Length(1,(256))])
+	answer1 = StringField('Securtiy Answer 1', 
+		validators=[DataRequired(),Length(1,(64))])
+	answer2 = StringField('Securtiy Answer 2', 
+		validators=[DataRequired(),Length(1,(64))])
+	subscribe = BooleanField('Subscribe to Band-Fan Emails')
 	submit = SubmitField('REGISTER')
 
 	#Custom validator auto run on email field
@@ -31,17 +40,6 @@ class LoginForm(FlaskForm):
 	remember_me = BooleanField('Keep Me Logged In')
 	submit = SubmitField('LOGIN')
 
-'''
-class RegistrationForm(FlaskForm):
-	email = StringField('Email', 
-						validators=[DataRequired(), Length(1,64), Email()])
-	password = PasswordField('Password', validators=[
-		DataRequired(), EqualTo('password2', 'Passwords must match.'),
-		Regexp('^[A-Za-z][A-Za-z0-9]*$', 0,'No special characters')])
-	password2 = PasswordField('Confirm new Password', 
-							  validators=[DataRequired()])
-	submit = SubmitField('Update Password')
-'''
 
 class ChangePasswordForm(FlaskForm):
 	old_password = PasswordField('Old Password', validators=[DataRequired()])
@@ -49,7 +47,7 @@ class ChangePasswordForm(FlaskForm):
 		DataRequired(), EqualTo('new_password2', 'Passwords must match.'),
 		Regexp('^[A-Za-z][A-Za-z0-9]*$', 0,'No special characters')])
 	new_password2 = PasswordField('Confirm new Password', 
-							  validators=[DataRequired()])
+								  validators=[DataRequired()])
 	submit = SubmitField('Update Password')
 
 
@@ -61,4 +59,18 @@ class ChangeEmailForm(FlaskForm):
 
 
 class PasswordResetForm(FlaskForm):
-	pass
+	new_password = PasswordField('Password', validators=[
+		DataRequired(), EqualTo('new_password2', 'Passwords must match.'),
+		Regexp('^[A-Za-z0-9]*$', 0,'No special characters'), Length(4,18)])
+	new_password2 = PasswordField('Confirm Password', validators=[DataRequired()])
+	answer1 = StringField('Securtiy Answer 1', 
+		validators=[DataRequired(),Length(1,(64))])
+	answer2 = StringField('Securtiy Answer 2', 
+		validators=[DataRequired(),Length(1,(64))])
+	submit = SubmitField('RESET')
+
+
+class PasswordResetFormEmail(FlaskForm):
+	email = StringField('Email', 
+						validators=[DataRequired(), Length(1,64), Email()])
+	submit = SubmitField('SUBMIT')

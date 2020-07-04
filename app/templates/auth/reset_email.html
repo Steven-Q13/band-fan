@@ -1,0 +1,47 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% extends "base.html" %}
+
+{% block title %}Band-Fan Profile{% endblock %}
+
+{% block head  %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reset_email.css') }}">
+{% endblock %}
+
+
+{% block page_content %}
+<div class="container" style="margin-bottom: 24px;">
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+
+	<div class="col-lg-6 col-md-8 col-sm-8 col-12 login-box">
+		<div class="row">
+			<div class="header-icon">
+				<img src="{{ url_for('static', filename='icons/guitar-white.png') }}" class="pic-20"/>
+			</div>
+		</div>
+		<div class="col-lg-12 header-title">Enter Account's Email</div>
+
+		<div class="col-sm-12 form-box">
+			<form action="" method="post" novalidate>
+				{{ form.hidden_tag() }}
+
+				<label class="form-control-label">EMAIL</label>
+				{{ form.email(class_='form-control form-field') }}
+
+				<div class="col-sm-12 submit-button">
+					{{ form.submit(class_='btn btn-submit') }}
+				</div>
+			</form>
+		</div>
+
+		<div class="row">
+			<div class="login-redirects">
+				<p><br style="line-height: 60px">Back to <a href="{{ url_for('auth.login') }}" class="login-link">Login</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-lg-3 col-md-2 col-sm-2"></div>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 @use "color";
 
 .login-box {
-    margin-top: calc(8px + (140 - 8) * ((100vw - 520px) / (1600 - 520)));
+    margin-top: 12px;
     height: auto;
     background: color.$app-gray;
     border-radius: 22px;
@@ -12,7 +12,6 @@
 .login-icon {
     margin-top: 18px;
 }
-
 
 .login-title {
     margin-top: 15px;
@@ -74,7 +73,6 @@
 
 .btn-login:hover {
     background: color.$app-green;
-    border-color: color.$app-green;
     color: color.$app-black;
 }
 
@@ -100,7 +98,6 @@
     float: center;
     margin-bottom: 24px;
 }
-
 
 .login-checkbox {
     -webkit-appearance: none;

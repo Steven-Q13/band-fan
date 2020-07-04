@@ -1,7 +1,7 @@
 @use "color";
 
 .login-box {
-    margin-top: calc(8px + (100 - 8) * ((100vw - 520px) / (1600 - 520)));
+    margin-top: calc(8px + (80 - 8) * ((100vw - 520px) / (1600 - 520)));
     height: auto;
     background: color.$app-gray;
     border-radius: 22px;
@@ -9,12 +9,11 @@
     box-shadow: 0;
 }
 
-.login-icon {
+.header-icon {
     margin-top: 18px;
 }
 
-
-.login-title {
+.header-title {
     margin-top: 15px;
     text-align: center;
     font-size: 30px;
@@ -23,7 +22,7 @@
     color: color.$app-white;
 }
 
-.login-form {
+.form-box {
     margin-top: 20px;
     text-align: left;
 }
@@ -57,13 +56,13 @@
     letter-spacing: 1px;
 }
 
-.login-button {
+.submit-button {
     float: right;
     text-align: right;
     margin-bottom: 26px;
 }
 
-.btn-login {
+.btn-submit {
     background: color.$app-gray;
     border-color: color.$app-green;
     border-radius: 6px;
@@ -72,9 +71,8 @@
     letter-spacing: 1px;
 }
 
-.btn-login:hover {
+.btn-submit:hover {
     background: color.$app-green;
-    border-color: color.$app-green;
     color: color.$app-black;
 }
 
@@ -99,37 +97,4 @@
     text-align: center;
     float: center;
     margin-bottom: 24px;
-}
-
-
-.login-checkbox {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: color.$app-white;
-    width: 13px;
-    height: 13px;
-    border: 0px;
-    border-radius: 0px;
-    display: inline-block;
-    position: relative;
-}
-
-.login-checkbox:checked {
-    background-color: color.$app-green;
-    width: 13px;
-    height: 13px;
-    border: 0px;
-    border-radius: 0px;
-    display: inline-block;
-    position: relative;
-}
-
-.login-checkbox:checked:after {
-    content: '\2714';
-    font-size: 14px;
-    position: absolute;
-    line-height: 0px;
-    top: 6px;
-    left: 0.5px;
-    color: color.$app-black;
 }

@@ -8,10 +8,6 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
 {% endblock %}
 
-<!--
-	Make back to login link look like reset link on login pagel
- -->
-
 {% block page_content %}
 <div class="container" style="margin-bottom: 24px;">
 	<div class="col-lg-3 col-md-2 col-sm-2"></div>
@@ -35,7 +31,18 @@
 				<label class="form-control-label">CONFIRM PASSWORD</label>
 				{{ form.password2(class_='form-control form-field') }}
 
+				<label class="form-control-label">SECURITY QUESTION 1</label>
+				{{ form.question1(class_='form-control form-field') }} 
+				<label class="form-control-label">SECURITY QUESTION 1</label>
+				{{ form.answer1(class_='form-control form-field') }}
+				<label class="form-control-label">SECURITY QUESTION 2</label>
+				{{ form.question2(class_='form-control form-field') }} 
+				<label class="form-control-label">SECURITY ANSWER 2</label>
+				{{ form.answer2(class_='form-control form-field') }}
+
 				<div class="col-sm-12 login-button">
+					{{ form.subscribe(class_="login-checkbox", checked="checked", id="remember_me") }}
+					<label for="remember_me" class="login-checkbox-label">Recieve emails from Band-Fan</label><br>
 					{{ form.submit(class_='btn btn-login') }}
 				</div>
 			</form>
@@ -43,7 +50,7 @@
 
 		<div class="row">
 			<div class="login-redirects">
-				<p><br style="line-height: 60px">Back to: <a href="{{ url_for('auth.login') }}" class="login-link">Login</a>
+				<p><br style="line-height: 60px">Back to <a href="{{ url_for('auth.login') }}" class="login-link">Login</a>
 			</div>
 		</div>
 	</div>
