@@ -9,7 +9,7 @@ body {
 
 .title {
   margin-top: calc(1px + (12 - 1) * ((100vw - 520px) / (1600 - 520)));
-  margin-bottom: 0;
+  margin-bottom: 6px;
   text-align: center;
   font-weight: bold;
   color: #6ec878;

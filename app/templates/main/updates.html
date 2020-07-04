@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.html" as macros %}
 
 {% block Title %}Band-Fan Updates{% endblock %}
 
@@ -37,7 +38,7 @@
             </ul>
             {% endfor %}
             <div class="pagination">
-                {{ macros.pagination_widget(pagination, 'main.following') }}
+                {{ macros.pagination_widget(pagination, 'main.updates') }}
             </div>
 
             {% endif %} 

@@ -84,9 +84,6 @@ def following():
 		pagination=pagination)
 
 
-'''
-	Untested
-'''
 @main.route('/updates', methods=['GET'])
 @login_required
 def updates():
@@ -100,26 +97,14 @@ def updates():
 	return render_template('main/updates.html', bands=new_releases, 
 		pagination=pagination)
 
-	'''
-	following_links = current_user.following.all()
-	page = request.args.get('page', 1, type=int)
-	pagination = current_user.following.paginate(page, per_page=8, error_out=False)
-	following_links = pagination.items
-	new_releases = []
-	last_login = date.fromisoformat(session['last_login']) if 'last_login' in session else date.today()
-	l = current_user.last_login
 
-	for i in following_links:
-		band = Band.query.filter_by(id=i.band_following_id).first()
-
-		if band.newest_date >= last_login:
-			new_releases.append(band.colDict())
-
-	new_releases.sort(key=lambda new_releases: new_releases['newest_track']['date'])
-	new_releases.reverse()
-	return render_template('main/updates.html', bands=new_releases, 
-		pagination=pagination)
-	'''
+'''
+	Delete
+'''
+@main.route('/dateChange', methods=['GET'])
+def dateChange():
+	session['last_login'] = '2019-06-27'
+	return redirect(url_for('main.index'))
 
 
 def artistDict(id):
