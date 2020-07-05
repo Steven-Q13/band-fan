@@ -1,14 +1,16 @@
 import click
-from flask.cli import with_appcontext
-from config import config
 from flask import Flask
+from config import config
 from flask_moment import Moment
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask.cli import with_appcontext
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate, MigrateCommand
 
 db = SQLAlchemy()
 moment = Moment()
+migrate = Migrate()
 bootstrap = Bootstrap()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -23,6 +25,7 @@ def create_app(config_name='default'):
 	#init flask extensions
 	db.init_app(app)
 	moment.init_app(app)
+	migrate.init_app(app, db)
 	bootstrap.init_app(app)
 	login_manager.init_app(app)
 

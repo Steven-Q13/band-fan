@@ -48,6 +48,6 @@ def update_db_command():
 
 
 def init_app(app):
-    app.cli.add_command(init_db_command)
-    app.cli.add_command(write_db_command)
-    app.cli.add_command(update_db_command)
+	app.cli.add_command(init_db_command)
+	app.cli.add_command(write_db_command)
+	app.cli.add_command(update_db_command)

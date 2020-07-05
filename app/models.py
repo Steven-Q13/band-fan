@@ -108,8 +108,6 @@ class Band(db.Model):
 												   lazy='joined'),
 								lazy='dynamic',
 								cascade='all, delete-orphan')
-	#last_update = db.Column(db.Date(), default=date.today)
-
 
 	def users_to_notify(self):
 		all_users = self.following.all()
