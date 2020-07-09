@@ -30,7 +30,7 @@ def write_db_command():
 		f.write('Band:')
 		for i in band:
 			dateStr = i.newest_date.isoformat()
-			f.write('\tId: %s\t Name: %s\tNewest Track: %s' % (i.id, i.name, dateStr))
+			f.write('\tId: %s\t Name: %s\tNewest Track: %s\tTop Image: %s' % (i.id, i.name, dateStr, i.top_img))
 		f.write('\n\n')
 		f.write('User:')
 		for j in users:

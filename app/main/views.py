@@ -40,10 +40,15 @@ def band(bandID):
 	follows_band = False
 	if 'dbID' in artistInfo:
 		dbID = artistInfo['dbID']
+		if current_user.is_logged_in and Follow.query.filter_by(follower_id=current_user.id,
+			band_following_id=dbID).first():
+			follows_band = True
+		
+		'''
 		follows_check = Follow.query.filter_by(follower_id=current_user.id,
 			band_following_id=dbID).first()
 		if follows_check:
-			follows_band = True
+		'''
 
 	return render_template('main/band.html', info=artistInfo, 
 		follows_band=follows_band)
