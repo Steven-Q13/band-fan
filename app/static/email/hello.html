@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Band-Fan Welcome</title>
+	<style type="text/css">
+		.bodyCSS {
+		    background: #242224;
+		    color: #6ec878;
+		    text-align: center;
+		    width: 570px;
+		}
+
+		.header {
+		    font-size: 48px;
+			text-align: center;
+		    margin-top: 16px;
+		}
+
+		.main {
+		    background: #564654;
+		    margin-left: 32px;
+		    margin-right: 32px;
+		    padding: 16px;
+		    padding-top: 1px;
+		    text-align: left;
+		    color: #f4f0f8;
+		}
+
+		.footer {
+		    margin: 24px;
+		    margin-bottom: 18px;
+		}
+
+		.header > img {
+		    margin-top: 16px;
+		    margin-bottom: 32px;
+			margin-left: auto;
+			margin-right: auto;
+			width: 150px;
+			height: 150px;
+		    display: block;
+		}
+	</style>
+</head>
+<body>
+<div class="bodyCSS">
+	<div class="header">
+		<div class="title">Welcome to Band-Fan</div>
+		<img src="https://i.postimg.cc/xTxc3Bb2/guitar-white.png">
+	</div>
+
+	<div class="main">
+		<h2>Thanks for signing up for Band-Fan!</h2>
+        We're glad you're here. We'll keep you up to date with your favorite bands.  To learn more about how to use Band-Fan go <a href="{{ info }}" style="color: #6e97c8;">here.</a>
+	</div>
+            
+	<div class="footer">
+		Our mailing address is: 
+		<br> 
+		bandfan.notifications@gmail.com
+		<br> <br>
+		Want to stop receive emails from Band-Fan?
+		<br>
+		You can <a href="{{ unsubscribe }}" style="color: #6e97c8;">unsubscribe from this list</a>
+	</div>
+</div>
+</body>
+
+</html>

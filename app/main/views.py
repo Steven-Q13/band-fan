@@ -6,6 +6,7 @@ from ..models import User, Band, Follow
 from .forms import SearchForm
 from ..api_calls import Spotify
 from datetime import date
+import pickle
 
 
 @main.route('/', methods=['GET'])
@@ -52,7 +53,15 @@ def band(bandID):
 @login_required
 def addBand(bandID):
 	artistInfo = artistDict(bandID)
-	dbID = artistInfo['dbID'] if 'dbID' in artistInfo else makeBandCol(artistInfo)
+	if 'dbID' in artistInfo:
+		dbID = artistInfo['dbID'] 
+	else:
+		band = Band(uri=artistInfo['artist']['uri'])
+		band.updateBand(artistInfo)
+		db.session.add(band)
+		db.session.commit()
+		db.session.refresh(band)
+		dbID = band.id
 	current_user.follow(dbID)
 	db.session.commit()
 	flash('You are now following %s' % artistInfo['artist']['name'])
@@ -78,7 +87,7 @@ def following():
 	pagination = db.session.query(Band).filter(User.id == current_user.id).order_by(Band.newest_date.desc()).paginate(page, per_page=8)
 	bands = []
 	for i in pagination.items:
-		bands.append(i.colDict())
+		bands.append(i.bandDict())
 
 	return render_template('main/following.html', bands=bands, 
 		pagination=pagination)
@@ -92,44 +101,46 @@ def updates():
 	pagination = db.session.query(Band).filter(User.id == current_user.id, Band.newest_date >= last_login).order_by(Band.newest_date.desc()).paginate(page, per_page=8)
 	new_releases = []
 	for i in pagination.items:
-		new_releases.append(i.colDict())
+		new_releases.append(i.bandDict())
 
 	return render_template('main/updates.html', bands=new_releases, 
 		pagination=pagination)
 
 
-'''
-	Delete
-'''
-@main.route('/dateChange', methods=['GET'])
-def dateChange():
-	session['last_login'] = '2019-06-27'
-	return redirect(url_for('main.index'))
-
-
 def artistDict(id):
-	artistCol = Band.query.filter_by(uri=id).first()
-	if artistCol:
-		return artistCol.colDict()
+	artist = Band.query.filter_by(uri=id).first()
+	if artist:
+		return artist.bandDict()
 	return Spotify().getArtist(id)
 
 
-def makeBandCol(bandDict):
-	top_date = date.fromisoformat(bandDict['top_track']['date'])
-	newest_date = date.fromisoformat(bandDict['newest_track']['date'])
-
-	band = Band(name=bandDict['artist']['name'], 
-				img=bandDict['artist']['img'], 
-				uri=bandDict['artist']['uri'], 
-				top_name=bandDict['top_track']['name'],
-				top_img=bandDict['top_track']['img'],
-				top_uri=bandDict['top_track']['uri'],
-				top_date=top_date,
-				newest_name=bandDict['newest_track']['name'],
-				newest_img=bandDict['newest_track']['img'],
-				newest_uri=bandDict['newest_track']['uri'],
-				newest_date=newest_date)
-	db.session.add(band)
+'''
+	Delete
+'''
+@main.route('/dateChangeUser', methods=['GET'])
+@login_required
+def dateChangeUser():
+	current_user.last_login = date.fromisoformat('2016-06-27')
 	db.session.commit()
-	return band.id
+	return redirect(url_for('main.index'))
 
+'''
+	Delete
+'''
+@main.route('/changeBandURI', methods=['GET'])
+def changeBandURI():
+	band = db.session.query(Band).first()
+	band.newest_uri = 12345
+	db.session.commit()
+	return redirect(url_for('main.index'))
+
+
+'''
+	Delete
+'''
+@main.route('/changeUserURI', methods=['GET'])
+@login_required
+def changeUserURI():
+	current_user.latest_song_uri = 1234
+	db.session.commit()
+	return redirect(url_for('main.index'))

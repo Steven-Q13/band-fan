@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, session 
+from flask import current_app, render_template, redirect, request, url_for, flash, session 
 from flask_login import login_user, logout_user, login_required, current_user
 from . import auth
 from .. import db
@@ -6,12 +6,14 @@ from ..models import User
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm, \
     PasswordResetForm, ChangeEmailForm, PasswordResetFormEmail
 from datetime import date
+from ..api_calls import Mail
 
 
 # Might need more
 @auth.before_app_request
 def before_request():
     pass
+
 
 '''
     Fix generating errors messages when form input fails validators
@@ -58,47 +60,18 @@ def register():
                     subscribed=form.subscribe.data)
         db.session.add(user)
         db.session.commit()
+        mail = Mail(current_app.config['SECRET_KEY'], 
+                current_app.config['SERVER_EMAIL'], 
+                url_for('auth.unsubscribe'), 
+                url_for('main.updates'), 
+                url_for('main.info'))
+        mail.sendWelcomeEmail(user.email)
+        mail.quit()
         flash('Account registered')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
 
-@auth.route('/change-password', methods=['GET', 'POST'])
-def change_password():
-    form = ChangePasswordForm
-    if form.validate_on_submit():
-        if current_user.verify_password(form.old_password.data):
-            current_user.password(form.new_password.data)
-            db.session.commit()
-            flash('Password Succesfully Updated')
-            return redirect(url_for('main.index'))
-        else:
-            flash('Invalid Password')
-    return render_template('auth/change-password')
-
-
-@auth.route('/change-email', methods=['GET', 'POST'])
-def change_email():
-    form = ChangeEmailForm()
-    if form.validate_on_submit():
-        if current_user.verify_password(form.password.data):
-            current_user.email = form.new_email.data
-            db.session.commit()
-            flash('Email Succesfully Updated')
-            return redirect(url_for('main.inedx'))
-        else:
-            flash('Invalid Email Update')
-    return render_template('auth/change-email.html')
-
-
-@auth.route('/reset_password', methods=['GET', 'POST'])
-def reset_password():
-    pass
-
-
-'''
-    Add password reset
-'''
 @auth.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
@@ -118,6 +91,13 @@ def settings():
             current_user.email = emailForm.new_email.data
             db.session.commit()
             flash('Email Succesfully Updated')
+            mail = Mail(current_app.config['SECRET_KEY'], 
+                        current_app.config['SERVER_EMAIL'], 
+                        url_for('auth.unsubscribe'), 
+                        url_for('main.updates'), 
+                        url_for('main.info'))
+            mail.sendWelcomeEmail(current_user.email)
+            mail.quit()
             return redirect(url_for('main.index'))
         else:
             flash('Invalid Email')
@@ -170,6 +150,13 @@ def unsubscribe():
 def subscribe():
     current_user.subscribed = True
     db.session.commit()
+    mail = Mail(current_app.config['SECRET_KEY'], 
+                current_app.config['SERVER_EMAIL'], 
+                url_for('auth.unsubscribe'), 
+                url_for('main.updates'), 
+                url_for('main.info'))
+    mail.sendWelcomeEmail(current_user.email)
+    mail.quit()
     flash('You have subscribed to Band-Fan emails.')
     return redirect(url_for('main.index'))
 

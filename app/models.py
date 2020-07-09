@@ -19,9 +19,6 @@ class Follow(db.Model):
 	band_following_id = db.Column(db.Integer, db.ForeignKey('bands.id'),
 								  primary_key=True)
 
-	def ping(self):
-		self.last_checkin = datetime.utcnow()
-
 
 class User(UserMixin, db.Model):
 	__tablename__ = 'users'
@@ -55,7 +52,6 @@ class User(UserMixin, db.Model):
 	def verify_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
-
 	@staticmethod
 	def reset_password(users_email, old_password, new_password, answer1, answer2):
 		user = User.query.filter_by(emaail=users_email).first()
@@ -79,8 +75,11 @@ class User(UserMixin, db.Model):
 			band_following_id=bandID).first() is not None
 
 	#Ping should email user if they are subscribed that a band has an update
-	def ping(self, new_song_id):
-		pass
+	def ping(self, new_date, track_uri):
+		if self.subscribed and new_date >= self.last_login and track_uri != self.latest_song_uri:
+			latest_song_uri = track_uri
+			return True
+		return False
 
 	is_logged_in = True
 
@@ -120,9 +119,9 @@ class Band(db.Model):
 				u.ping(self.newest_uri)
 		return users
 
-	def colDict(self):
+	def bandDict(self):
 		info = {'artist':{}, 'top_track':{}, 
-			'newest_track':{}, 'dbID':self.id}
+				'newest_track':{}, 'dbID':self.id}
 		info['artist']['name'] = self.name
 		info['artist']['uri'] = self.uri
 		info['artist']['img'] = self.img
@@ -136,8 +135,20 @@ class Band(db.Model):
 		info['newest_track']['date'] = self.newest_date.isoformat()
 		info['newest_track']['uri'] = self.newest_uri
 		info['newest_track']['img'] = self.newest_img
-
 		return info
+
+	def updateBand(self, bandDict):
+		self.name = bandDict['artist']['name']
+		self.img = bandDict['artist']['img']
+		self.uri = bandDict['artist']['uri']
+		self.top_name = bandDict['top_track']['name']
+		self.top_uri = bandDict['top_track']['uri']
+		self.top_date = date.fromisoformat(bandDict['top_track']['date'])
+		self.newest_name = bandDict['newest_track']['name']
+		self.newest_img = bandDict['newest_track']['img']
+		self.newest_uri = bandDict['newest_track']['uri']
+		self.newest_date =date.fromisoformat(bandDict['newest_track']['date'])
+		return self.id
 
 
 @login_manager.user_loader
