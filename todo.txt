@@ -1,0 +1,13 @@
+ X Make form for login
+ - Make login view
+	- Make login template
+	- Make template CSS
+ - Make basic index
+ - Figure out sign out
+ - Make register view
+ - Test
+	- Test login
+	- Test register
+	- Test db
+		- Use auto db filler
+gunicorn --bind 0.0.0.0:5000 wsgi:app

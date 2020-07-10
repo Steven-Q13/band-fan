@@ -1,0 +1,5 @@
+Band:	Id: 1	 Name: Lana Del Rey	Newest Track: 2019-08-30	Top Image: None
+
+User:	Id: 1	 Name: sequeen0@gmail.com	 Last Login: 2020-07-08	Id: 2	 Name: squeen0@umd.edu	 Last Login: 2020-07-08
+
+Follow:	Follower: 1	Band: 1

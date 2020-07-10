@@ -1,24 +1,6 @@
-#pycache files
-*/__pycache__
+venv
 *.pyc
-
-#Local database
-*.sqlite
-
-venv/
-
-#Module files
-/*.egg-info
-/*.egg
-
-#Python supporting file
-*.swp
-
-#Dev notes
-*.txt
-
-#Local config info
-config.py
-
-#Files used for scss compiling
-*.map
+staticfiles
+.env
+db.sqlite3
+getting-started/*

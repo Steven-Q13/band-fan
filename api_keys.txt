@@ -1,0 +1,10 @@
+Client ID: 63e85dbc2f9f4c3896eb2709a0249483
+Client Secret: 2d001d43486845c1992c37ba87abaf6c
+
+Spotify App URL: https://developer.spotify.com/dashboard/applications/63e85dbc2f9f4c3896eb2709a0249483
+
+export SPOTIPY_CLIENT_ID=63e85dbc2f9f4c3896eb2709a0249483
+export SPOTIPY_CLIENT_SECRET=2d001d43486845c1992c37ba87abaf6c
+
+export SECRET_KEY=#bf123key
+
